@@ -1,11 +1,16 @@
 from django.shortcuts import render
 
+from rest_framework import generics
+
 # Create your views here
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import EventType, Event, Fighter, Registration
-from .serializers import EventTypeSerializer, EventSerializer, FighterSerializer, RegistrationSerializer
+from .serializers import EventTypeSerializer, EventSerializer, FighterSerializer,  RegistrationSerializer, MyTokenObtainPairSerializer, RegisterSerializer
 
 class EventTypeViewSet(viewsets.ModelViewSet):
     queryset = EventType.objects.all()
@@ -39,3 +44,18 @@ class RegistrationViewSet(viewsets.ModelViewSet):
     queryset = Registration.objects.select_related('fighter', 'event')  # Optimize for fighter and event data
     serializer_class = RegistrationSerializer
 
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+#Register User
+class RegisterView(generics.CreateAPIView):
+    queryset = Fighter.objects.all()
+    serializer_class = RegisterSerializer
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getProfile(request):
+    user = request.user
+    serializer = ProfileSerializer(user, many=False)
+    return Response(serializer.data)

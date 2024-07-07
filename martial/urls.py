@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from main_module import views
+from main_module import serializers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main_module.urls')),
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('profile/', views.getProfile, name='profile'),
+
 ]

@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 class EventType(models.Model):
@@ -24,17 +26,18 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.event_type} - {self.date}"
 
-class Fighter(models.Model):
-    name = models.CharField(max_length=255, required=True)
-    age = models.PositiveIntegerField(required=True)
-    weight = models.IntegerField(required=True)
-    height = models.IntegerField(required=True)
-    date_of_birth = models.DateField()
-    address = models.TextField()
+class Fighter(AbstractUser):
+    name = models.CharField(max_length=255, blank=False, null=False)
+    age = models.PositiveIntegerField(blank=False, null=False, default=18)
+    weight = models.IntegerField(blank=False, null=False, default=0)
+    height = models.IntegerField(blank=False, null=False, default=0)
+    date_of_birth = models.DateField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
     sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
-    address = models.TextField()
 
-    
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    password2 = models.CharField(max_length=255)
     # Add other relevant fighter information (weight class, experience, etc.)
 
     def __str__(self):

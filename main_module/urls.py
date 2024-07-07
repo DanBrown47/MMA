@@ -12,4 +12,5 @@ router.register(r'registrations', views.RegistrationViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    
 ]
