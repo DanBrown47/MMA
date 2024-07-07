@@ -25,7 +25,16 @@ class Event(models.Model):
         return f"{self.event_type} - {self.date}"
 
 class Fighter(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, required=True)
+    age = models.PositiveIntegerField(required=True)
+    weight = models.IntegerField(required=True)
+    height = models.IntegerField(required=True)
+    date_of_birth = models.DateField()
+    address = models.TextField()
+    sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
+    address = models.TextField()
+
+    
     # Add other relevant fighter information (weight class, experience, etc.)
 
     def __str__(self):
