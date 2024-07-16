@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class EventTypeSerializer(serializers.ModelSerializer):
@@ -39,15 +40,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         token['username'] = user.username
         token['email'] = user.email
-        # ...
 
         return token
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+
     password = serializers.CharField(
         write_only=True, required=True, validators=[validate_password])
-    password2 = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(required=True)
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=Fighter.objects.all())]
@@ -66,10 +67,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = Fighter.objects.create(
-            username=validated_data['username'],
             email=validated_data['email'],
-            bio=validated_data['bio'],
-            cover_photo=validated_data['cover_photo']
         )
 
         user.set_password(validated_data['password'])

@@ -11,8 +11,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import EventType, Event, Fighter, Registration
 from .serializers import EventTypeSerializer, EventSerializer, FighterSerializer,  RegistrationSerializer, MyTokenObtainPairSerializer, RegisterSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class EventTypeViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
 
@@ -22,6 +25,8 @@ class EventTypeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class EventViewSet(viewsets.ModelViewSet):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Event.objects.select_related('event_type')  # Optimize for event type data
     serializer_class = EventSerializer
 
@@ -48,14 +53,24 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 #Register User
-class RegisterView(generics.CreateAPIView):
+class RegisterView(viewsets.ModelViewSet):
     queryset = Fighter.objects.all()
     serializer_class = RegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getProfile(request):
+def getProfile(request): # Authenticate this manually in future
     user = request.user
     serializer = ProfileSerializer(user, many=False)
     return Response(serializer.data)
+
+

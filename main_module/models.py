@@ -39,6 +39,8 @@ class Fighter(AbstractUser):
     password = models.CharField(max_length=255)
     password2 = models.CharField(max_length=255)
     # Add other relevant fighter information (weight class, experience, etc.)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.name
