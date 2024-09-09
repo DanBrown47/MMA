@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 # Create your models here.
@@ -15,6 +15,8 @@ class EventType(models.Model):
         return self.get_type_display()
 
 class Event(models.Model):
+    event_name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
@@ -22,11 +24,12 @@ class Event(models.Model):
     max_participants = models.PositiveIntegerField()
     fees = models.DecimalField(max_digits=10, decimal_places=2)
     organizer_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.event_type} - {self.date}"
 
-class Fighter(AbstractUser):
+class Fighter(AbstractUser):    
     name = models.CharField(max_length=255, blank=False, null=False)
     age = models.PositiveIntegerField(blank=False, null=False, default=18)
     weight = models.IntegerField(blank=False, null=False, default=0)
@@ -38,12 +41,17 @@ class Fighter(AbstractUser):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     password2 = models.CharField(max_length=255)
-    # Add other relevant fighter information (weight class, experience, etc.)
+    main_event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True, null=True)
+    club_name = models.CharField(max_length=255, blank=True, null=True)
+    photo = models.ImageField(upload_to='fighter_photos/', blank=True, null=True)
+    id_card = models.ImageField(upload_to='fighter_id_cards/', blank=True, null=True)
+
+    REQUIRED_FIELDS = ['username']
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+
 
     def __str__(self):
-        return self.name
+        return self.email
 
 class Registration(models.Model):
     fighter = models.ForeignKey(Fighter, on_delete=models.CASCADE)
