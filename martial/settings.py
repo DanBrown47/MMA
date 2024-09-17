@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
 
     'main_module',  # Add main_module to installed apps
+    
 ]
 
 MIDDLEWARE = [
@@ -168,9 +169,12 @@ SIMPLE_JWT = {
 AUTH_USER_MODEL = 'main_module.Fighter'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5501',
+    'http://localhost:5500',
+     
+    "http://127.0.0.1:8000",
     # Add other allowed origins if needed
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_METHODS = [
     'GET',
@@ -192,3 +196,4 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+CORS_ALLOW_CREDENTIALS = True
