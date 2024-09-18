@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .profile-info img {
+            border-radius: 50%;
+        }
+        .logout-btn button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="profile-info" style="float: left;">
+            <img src="{{ profile.photo }}" alt="Profile Photo" style="width: 50px; height: 50px;">
+            <p>{{ profile.name }}</p>
+        </div>
+        <div class="logout-btn" style="float: right;">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

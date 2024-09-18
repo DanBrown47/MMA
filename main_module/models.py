@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import  AbstractBaseUser,BaseUserManager
 
 
 # Create your models here.
@@ -28,9 +28,21 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.event_type} - {self.date}"
+class FighterManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Fighter(AbstractUser):    
-    name = models.CharField(max_length=255, blank=False, null=False)
+    def create_superuser(self, email, password=None, **extra_fields):
+        # No need for superuser functionality, simply raise an error if this is called
+        raise NotImplementedError("Superuser functionality is not implemented for Fighter model.")
+class Fighter(AbstractBaseUser):    
+    name = models.CharField(max_length=255,unique=False, blank=False, null=True)
     age = models.PositiveIntegerField(blank=False, null=False, default=18)
     weight = models.IntegerField(blank=False, null=False, default=0)
     height = models.IntegerField(blank=False, null=False, default=0)
@@ -45,11 +57,28 @@ class Fighter(AbstractUser):
     club_name = models.CharField(max_length=255, blank=True, null=True)
     photo = models.ImageField(upload_to='fighter_photos/', blank=True, null=True)
     id_card = models.ImageField(upload_to='fighter_id_cards/', blank=True, null=True)
+    # Required fields for admin interface compatibility
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ['username']
+    
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
+    def __str__(self):
+        return self.email
 
+    def has_perm(self, perm, obj=None):
+        """Does the user have a specific permission?"""
+        return True
 
+    def has_module_perms(self, app_label):
+        """Does the user have permissions to view the app `app_label`?"""
+        return True
+
+        # Remove the username field inherited from AbstractUser
+    objects = FighterManager()
+    
     def __str__(self):
         return self.email
 
