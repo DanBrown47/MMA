@@ -170,6 +170,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 # JWT Token view
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+    
 
 # User registration view
 class RegisterView(viewsets.ModelViewSet):
@@ -192,6 +193,7 @@ class RegisterView(viewsets.ModelViewSet):
 # Profile view
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+
 def getProfile(request):
     user = request.user
     serializer = FighterSerializer(user, many=False)
@@ -207,7 +209,7 @@ def dashboard_view(request):
 
     # Serialize the user data
     serializer = FighterSerializer(user, many=False) 
-    return render(request, 'dashboard.html', {'profile': serializer.data})
+    return render(request, '../src/dashboard.html', {'profile': serializer.data})
 
 # Logout view
 def logout_view(request):
