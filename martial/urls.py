@@ -22,9 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('main_module.urls')),
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('token/refresh/', views.TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/', views.getProfile, name='profile'),
     path('login/', views.MyTokenObtainPairView.as_view(), name='login'),  # Login using JWT
     path('dashboard/', views.dashboard_view, name='dashboard'),  # Dashboard view after login
-
+    
 ]

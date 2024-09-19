@@ -33,7 +33,7 @@
             <p>{{ profile.name }}</p>
         </div>
         <div class="logout-btn" style="float: right;">
-            <form action="{% url 'logout' %}" method="post">
+            <form action="/logout/" method="post">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
             </form>

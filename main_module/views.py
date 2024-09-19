@@ -202,14 +202,14 @@ def getProfile(request):
 # Dashboard view
 @login_required
 def dashboard_view(request):
-    if not request.user.is_authenticated:
-        return redirect('/login/')  # Redirect to login if not authenticated
-    print("Dashboard view accessed") 
+    # if not request.user.is_authenticated:
+    #     return redirect('/login/')  # Redirect to login if not authenticated
+    # print("Dashboard view accessed") 
     user = request.user
 
     # Serialize the user data
     serializer = FighterSerializer(user, many=False) 
-    return render(request, '../src/dashboard.html', {'profile': serializer.data})
+    return render(request, 'dashboard.html', {'profile': serializer.data})
 
 # Logout view
 def logout_view(request):
