@@ -41,6 +41,7 @@ class FighterManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         # No need for superuser functionality, simply raise an error if this is called
         raise NotImplementedError("Superuser functionality is not implemented for Fighter model.")
+    
 class Fighter(AbstractBaseUser):    
     name = models.CharField(max_length=255,unique=False, blank=False, null=True)
     age = models.PositiveIntegerField(blank=False, null=False, default=18)
@@ -49,7 +50,6 @@ class Fighter(AbstractBaseUser):
     date_of_birth = models.DateField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
-
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     password2 = models.CharField(max_length=255)

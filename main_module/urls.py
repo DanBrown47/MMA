@@ -19,6 +19,7 @@ urlpatterns = [
     path('login/', MyTokenObtainPairView.as_view(), name='login'),  # Login using JWT
     path('dashboard/', dashboard_view, name='dashboard'),  # Dashboard view after login
     path('logout/', logout_view, name='logout'),  # Logout functionality
+    path('login/dashboard/', views.dashboard_view, name='login_dashboard'),
 
     # Include other necessary authentication URLs if needed
     path('api-auth/', include('rest_framework.urls')),  # DRF's built-in authentication views (optional)

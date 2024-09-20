@@ -104,6 +104,11 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+class DashboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fighter
+        fields = ['name', 'club_name', 'weight', 'height', 'photo']
+
 class FighterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
@@ -129,10 +134,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         # Add custom claims
         token['email'] = user.email
-
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -26,5 +26,6 @@ urlpatterns = [
     path('profile/', views.getProfile, name='profile'),
     path('login/', views.MyTokenObtainPairView.as_view(), name='login'),  # Login using JWT
     path('dashboard/', views.dashboard_view, name='dashboard'),  # Dashboard view after login
+    path('login/dashboard/', views.dashboard_view, name='login_dashboard'),  # New URL pattern for login/dashboard
     
 ]

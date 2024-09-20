@@ -8,7 +8,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
+            
         },
         body: JSON.stringify({ email: email, password: password  })
     })
@@ -16,7 +16,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     .then(data => {
         if (data.access) {
             localStorage.setItem('token', data.access);  // Store JWT token
-            window.location.href = 'http://127.0.0.1:8000/dashboard/';  // Redirect to dashboard
+            window.location.href = '/FE/British/src/dashboard.html';  // Redirect to dashboard
         } else {
             document.getElementById('error-message').textContent = 'Invalid credentials. Please try again.';
         }
@@ -26,3 +26,4 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
         document.getElementById('error-message').textContent = 'An error occurred. Please try again later.';
     });
 });
+

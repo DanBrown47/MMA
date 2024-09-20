@@ -192,24 +192,27 @@ class RegisterView(viewsets.ModelViewSet):
 
 # Profile view
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-
+@permission_classes([IsAuthenticated]) 
 def getProfile(request):
     user = request.user
     serializer = FighterSerializer(user, many=False)
     return Response(serializer.data)
 
-# Dashboard view
-@login_required
-def dashboard_view(request):
-    # if not request.user.is_authenticated:
-    #     return redirect('/login/')  # Redirect to login if not authenticated
-    # print("Dashboard view accessed") 
-    user = request.user
 
+# Dashboard view
+@api_view(['GET'])
+def dashboard_view(request):
+    access_token = request.headers.get('Authorization')
+    # access -> validation
+    if not access_token:
+        return Response({'error': 'The user is not logged in'}, status=status.HTTP_403_FORBIDDEN)
+
+    print("Dashboard view accessed") 
+    email = "amal@gmail.com"
     # Serialize the user data
-    serializer = FighterSerializer(user, many=False) 
-    return render(request, 'dashboard.html', {'profile': serializer.data})
+    fighter_instance = Fighter.objects.get(email=email)
+    serializer = FighterSerializer(fighter_instance, many=False) 
+    return Response({'profile': serializer.data}, status=status.HTTP_200_OK)
 
 # Logout view
 def logout_view(request):
