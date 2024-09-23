@@ -208,7 +208,7 @@ def dashboard_view(request):
         return Response({'error': 'The user is not logged in'}, status=status.HTTP_403_FORBIDDEN)
 
     print("Dashboard view accessed") 
-    email = "amal@gmail.com"
+    email = "malu90@gmail.com"
     # Serialize the user data
     fighter_instance = Fighter.objects.get(email=email)
     serializer = FighterSerializer(fighter_instance, many=False) 

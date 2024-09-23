@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,11 +30,17 @@
     <div class="dashboard">
         <div class="profile-info" style="float: left;">
             <!-- // how to inject google -->
-            <img src="" alt="Profile Photo" style="width: 50px; height: 50px;">
+            <!-- <img src="" alt="Profile Photo" style="width: 50px; height: 50px;">
             <p id="name_of_fighter"></p>
         </div>
         <h1 id="name_of_fighter"></h1> 
-        <h1 id="age_of_fighter"></h1>   
+        <h1 id="age_of_fighter"></h1> 
+        <h1 id="weight_of_fighter"></h1> 
+        <h1 id="height_of_fighter"></h1> 
+        <h1 id="club_of_fighter"></h1> 
+         
+
+        
         <div class="logout-btn" onclick="logout()" style="float: right;">
             <button type="submit">Logout</button>
         </div>
@@ -42,4 +48,110 @@
     </div>
 </body>
 <script src="../js/dashboard.js"></script>
+</html> --> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            display: flex;
+        }
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #f44336;
+        }
+        /* Main content styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .main-content h1 {
+            font-size: 2em;
+            color: #f44336;
+        }
+        .event-details, .profile-details {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <img src="" alt="Profile Photo" id="profile_pic">
+            <h2 id="profile_name">Fighter Name</h2>
+            <a href="#" id="show_profile">Profile</a>
+            <a href="#" id="show_events">Events</a>
+            <a href="#" id="show_winning_list">Winning List</a>
+            <button onclick="logout()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; margin-top: 20px;">Logout</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Dashboard</h1>
+            <div id="profile_section" class="profile-details">
+                <h2>Profile Details</h2>
+                <p>Name: <span id="name_of_fighter"></span></p>
+                <p>Age: <span id="age_of_fighter"></span></p>
+                <p>Weight: <span id="weight_of_fighter"></span></p>
+                <p>Height: <span id="height_of_fighter"></span></p>
+                <p>Club: <span id="club_of_fighter"></span></p>
+            </div>
+
+            <div id="event_section" class="event-details">
+                <h2>Event Details</h2>
+                <p id="event_name"></p>
+                <p>Date: <span id="event_date"></span></p>
+                <p>Location: <span id="event_location"></span></p>
+                <p>Eligibility: <span id="event_eligibility"></span></p>
+                <p>Rules: <span id="event_rules"></span></p>
+            </div>
+        </div>
+    </div>
+    <script src="../js/dashboard.js"></script>
+</body>
 </html>
