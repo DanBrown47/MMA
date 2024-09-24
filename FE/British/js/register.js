@@ -1,97 +1,3 @@
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const form = document.querySelector("form");
-    
-//     form.addEventListener("submit", function(event) {
-//         event.preventDefault(); // Prevent the form from submitting the default way
-//         console.log('success');
-//         // Create a FormData object to handle file uploads and form data
-//         const formData = new FormData(form);
-
-//         // Send the POST request using Fetch API
-//         fetch("http://127.0.0.1:8000/api/register/", {
-//             method: "POST",
-//             body: formData,
-//         })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok ' + response.statusText);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             // Handle the response data here
-//             console.log("Success:", data);
-//             alert("Registration successful!");
-//         })
-//         .catch(error => {
-//             console.error("Error:", error);
-//             alert("There was an error with the registration. Please try again.");
-//         });
-//     });
-// });
-// document.addEventListener("DOMContentLoaded", function() {
-//     const dobInput = document.getElementById('date_of_birth'); 
-//     const ageInput = document.getElementById('age');  
-//     const form = document.querySelector("form");  
-
-//     // Event listener to calculate age when DOB is changed
-//     dobInput.addEventListener('change', function() {
-//         const dobValue = this.value;
-//         console.log("Selected DOB:", dobValue);  // Log DOB
-
-//         if (dobValue) {
-//             const dob = new Date(dobValue);
-//             const today = new Date();
-//             let age = today.getFullYear() - dob.getFullYear();
-//             const monthDiff = today.getMonth() - dob.getMonth();
-
-//             // Adjust age if needed
-//             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-//                 age--;
-//             }
-
-//             // Set the age field value
-//             ageInput.value = age;
-//             console.log("Calculated Age:", age);  // Log calculated age
-//         }
-//     });
-
-//     // Form submission with age calculation
-//     form.addEventListener("submit", function(event) {
-//         event.preventDefault();  // Prevent default form submission
-//         console.log('Form Submitted');
-        
-//         // Ensure age is calculated before submission (Optional but recommended)
-//         if (!ageInput.value) {
-//             alert("Please select Date of Birth to calculate age.");
-//             return;  // Do not submit if age is not calculated
-//         }
-
-//         // Create FormData object
-//         const formData = new FormData(form);
-
-//         // Submit form data using Fetch API
-//         fetch("http://127.0.0.1:8000/api/register/", {
-//             method: "POST",
-//             body: formData,
-//         })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok ' + response.statusText);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log("Success:", data);  // Log success response
-//             alert("Registration successful!");
-//         })
-//         .catch(error => {
-//             console.error("Error:", error);  // Log error response
-//             alert("There was an error with the registration. Please try again.");
-//         });
-//     });
-// });
 document.addEventListener("DOMContentLoaded", function() {
     const dobInput = document.getElementById('date_of_birth'); 
     const ageInput = document.getElementById('age');  
@@ -170,8 +76,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const formData = new FormData(form);
-
-        fetch("http://127.0.0.1:8000/api/register/", {
+        console.log("Sending form")
+        console.log(formData)
+        console.log("=======")
+        fetch("http://127.0.0.1:9000/api/register/", {
             method: "POST",
             body: formData,
         })

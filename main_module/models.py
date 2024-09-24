@@ -55,6 +55,7 @@ class Fighter(AbstractBaseUser):
     name = models.CharField(max_length=255,unique=False, blank=False, null=True)
     age = models.PositiveIntegerField(blank=False, null=False, default=18)
     weight = models.IntegerField(blank=False, null=False, default=0)
+    weight_category = models.CharField(max_length=200, unique=False, blank=False, null=True)
     height = models.IntegerField(blank=False, null=False, default=0)
     date_of_birth = models.DateField(blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
@@ -88,7 +89,7 @@ class Fighter(AbstractBaseUser):
         """Does the user have permissions to view the app `app_label`?"""
         return True
 
-        # Remove the username field inherited from AbstractUser
+    # Remove the username field inherited from AbstractUser
     objects = FighterManager()
     
     def __str__(self):

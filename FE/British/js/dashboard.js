@@ -12,7 +12,7 @@ document.getElementById('show_events').addEventListener('click', function() {
 
 function fetchEventDetails() {
     const access_token = localStorage.getItem('token');
-    fetch('http://127.0.0.1:8000/dashboard/events', {
+    fetch('http://127.0.0.1:9000/dashboard/events', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ window.onload = function() {
 
 function fetchProfileData() {
     const access_token = localStorage.getItem('token');
-    fetch('http://127.0.0.1:8000/dashboard', {
+    fetch('http://127.0.0.1:9000/dashboard', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
