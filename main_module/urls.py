@@ -20,7 +20,10 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name='dashboard'),  # Dashboard view after login
     path('logout/', logout_view, name='logout'),  # Logout functionality
     path('login/dashboard/', views.dashboard_view, name='login_dashboard'),
+    path('dashboard/events/', views.event_list, name='event_list'),
+    path('dashboard/events/<int:event_id>/', views.event_detail, name='event_detail'),
 
     # Include other necessary authentication URLs if needed
     path('api-auth/', include('rest_framework.urls')),  # DRF's built-in authentication views (optional)
+    
 ]

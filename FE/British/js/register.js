@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: 'Light heavyweight', limit: 93.0 },
         { name: 'Cruiserweight', limit: 102.1 },
         { name: 'Heavyweight', limit: 120.2 },
-        { name: 'Super heavyweight', limit: Infinity }  // No upper limit
+        { name: 'Super heavyweight', limit: Infinity }  
     ];
 
     // Function to determine weight category based on weight in kg
