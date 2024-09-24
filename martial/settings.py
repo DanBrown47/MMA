@@ -175,7 +175,7 @@ AUTH_USER_MODEL = 'main_module.Fighter'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5500',
      
-    "http://127.0.0.1:9000",
+    "http://127.0.0.1:8000",
     # Add other allowed origins if needed
 ]
 CORS_ALLOW_ALL_ORIGINS = True

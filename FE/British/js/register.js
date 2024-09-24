@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Sending form")
         console.log(formData)
         console.log("=======")
-        fetch("http://127.0.0.1:9000/api/register/", {
+        fetch("http://127.0.0.1:8000/api/register/", {
             method: "POST",
             body: formData,
         })

@@ -1,4 +1,4 @@
-const apiUrl = "http://127.0.0.1:9000/dashboard/events/";
+const apiUrl = "http://127.0.0.1:8000/dashboard/events/";
 const eventContainer = document.getElementById("eventContainer");
 const eventModal = document.getElementById("eventModal");
 const eventModalTitle = document.getElementById("eventModalTitle");
@@ -35,7 +35,7 @@ fetch(apiUrl)
 
             eventCard.addEventListener("click", () => {
                 const eventId = eventCard.dataset.eventId;
-                fetch(`http://127.0.0.1:9000/dashboard/events/${eventId}/`)
+                fetch(`http://127.0.0.1:8000/dashboard/events/${eventId}/`)
                     .then(response => response.json())
                     .then(eventDetails => {
                         eventModalTitle.textContent = eventDetails.event_name;

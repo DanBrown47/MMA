@@ -19,12 +19,12 @@ class EventSerializer(serializers.ModelSerializer):
 class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name', 'club_name', 'weight', 'height', 'photo']
+        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email', 'coach_name','club_name', 'photo', 'id_card', 'main_event']
 
 class FighterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name', 'age', 'weight', 'height', 'date_of_birth', 'address', 'sex', 'email', 'club_name', 'photo', 'id_card', 'main_event']  # Specify fields explicitly
+        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']  # Specify fields explicitly
         read_only_fields = ['email', 'main_event']
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -60,7 +60,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['name', 'age', 'weight', 'weight_category', 'height', 'date_of_birth', 'address', 'sex', 'email', 'club_name', 'photo', 'id_card', 'password', 'password2']
+        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -73,11 +73,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             age=validated_data['age'],
             weight=validated_data['weight'],
+            weight_category=validated_data['weight_category'],
             height=validated_data['height'],
             date_of_birth=validated_data.get('date_of_birth', None),
             address=validated_data.get('address', None),
+            state=validated_data['state'],
             sex=validated_data['sex'],
             club_name=validated_data.get('club_name', None),
+            coach_name=validated_data.get('coach_name'),
             photo=validated_data.get('photo', None),
             id_card=validated_data.get('id_card', None),
         )
