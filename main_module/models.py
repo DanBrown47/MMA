@@ -53,6 +53,8 @@ class FighterManager(BaseUserManager):
     
 class Fighter(AbstractBaseUser):    
     name = models.CharField(max_length=255,unique=False, blank=False, null=True)
+    middle_name = models.CharField(max_length=255,unique=False, blank=False, null=True)
+    last_name = models.CharField(max_length=255,unique=False, blank=False, null=True)
     age = models.PositiveIntegerField(blank=False, null=False, default=18)
     weight = models.IntegerField(blank=False, null=False, default=0)
     weight_category = models.CharField(max_length=200, unique=False, blank=False, null=True)
@@ -63,6 +65,7 @@ class Fighter(AbstractBaseUser):
     state=models.CharField(max_length=255 ,blank=True,null=True)
     sex = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female')))
     email = models.EmailField(unique=True)
+    number=models.IntegerField( max_length=10,blank=False,null=False)
     password = models.CharField(max_length=255)
     password2 = models.CharField(max_length=255)
     main_event = models.ForeignKey(Event, on_delete=models.CASCADE, blank=True, null=True)
@@ -70,6 +73,10 @@ class Fighter(AbstractBaseUser):
     club_name = models.CharField(max_length=255, blank=True, null=True)
     photo = models.ImageField(upload_to='fighter_photos/', blank=True, null=True)
     id_card = models.ImageField(upload_to='fighter_id_cards/', blank=True, null=True)
+    win=models.IntegerField(blank=True,null=True)
+    loss=models.IntegerField(blank=True,null=True)
+    no_contest=models.IntegerField(blank=True,null=True)
+    unique_id=models.CharField(max_length=10,blank=False,null=False)
     # Required fields for admin interface compatibility
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

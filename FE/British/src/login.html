@@ -82,6 +82,24 @@
             color: red;
             margin-top: 15px;
         }
+        .home-button {
+            width: 10%;
+            padding: 10px;
+            background-color: #262826;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-button:hover {
+            background-color: #cf3008;
+        }
     </style>
 </head>
 <body>
@@ -100,6 +118,8 @@
             <button type="submit">Login</button>
             <p class="error-message" id="error-message"></p>
         </form>
+        <a href="http://127.0.0.1:5500/FE/British/index.html" class="home-button">Home</a>
+    </div>
     </div>
 
     <script src="../js/login.js"></script>

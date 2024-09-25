@@ -19,12 +19,12 @@ class EventSerializer(serializers.ModelSerializer):
 class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email', 'coach_name','club_name', 'photo', 'id_card', 'main_event']
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'coach_name','club_name', 'photo', 'id_card', 'main_event']
 
 class FighterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']  # Specify fields explicitly
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']  # Specify fields explicitly
         read_only_fields = ['email', 'main_event']
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -48,6 +48,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         # Add custom claims
         token['email'] = user.email
+        token['isAdmin'] = user.is_staff
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -60,7 +61,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']
+        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -70,7 +71,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = Fighter.objects.create(
             name=validated_data['name'],
+            middle_name=validated_data['middle_name'],
+            last_name=validated_data['last_name'],
             email=validated_data['email'],
+            number=validated_data['number'],
             age=validated_data['age'],
             weight=validated_data['weight'],
             weight_category=validated_data['weight_category'],

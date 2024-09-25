@@ -1,9 +1,12 @@
 Todo stuff
 
+X  Requirments txt
 -  Register -> Google pay page for event -> screenshot upload -> DB Table
 -  Fixture Generation - Rules 
 
--  JWT for login
+-  Add Firstname, Middlename, Lastname DB
+-  Add Win, Loss, No Contest DB
+X  JWT for login
 -  Admin LTE
 -  Unique ID generation for profile
--  Login Page -> home button
+X  Login Page -> home button

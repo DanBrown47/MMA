@@ -123,29 +123,14 @@ class RegisterView(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-# Profile view
-@api_view(['GET'])
-@permission_classes([IsAuthenticated]) 
-def getProfile(request):
-    user = request.user
-    serializer = FighterSerializer(user, many=False)
-    return Response(serializer.data)
-
-
 # Dashboard view
 @api_view(['GET'])
-def dashboard_view(request):
-    access_token = request.headers.get('Authorization')
-    # access -> validation
-    if not access_token:
-        return Response({'error': 'The user is not logged in'}, status=status.HTTP_403_FORBIDDEN)
-
-    print("Dashboard view accessed") 
-    email = "www@gmail.com"
+@permission_classes([IsAuthenticated])
+def dashboard_view(request): 
+    email = request.user.email
     # Serialize the user data
     fighter_instance = Fighter.objects.get(email=email)
     serializer = FighterSerializer(fighter_instance, many=False) 
-
     return Response({'profile': serializer.data}, status=status.HTTP_200_OK)
 
 # Logout view

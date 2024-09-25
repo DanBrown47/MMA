@@ -23,13 +23,9 @@ urlpatterns = [
     path('api/', include('main_module.urls')),
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('token/refresh/', views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('profile/', views.getProfile, name='profile'),
     path('login/', views.MyTokenObtainPairView.as_view(), name='login'),  # Login using JWT
     path('dashboard/', views.dashboard_view, name='dashboard'),  # Dashboard view after login
     path('login/dashboard/', views.dashboard_view, name='login_dashboard'),  # New URL pattern for login/dashboard
     path('dashboard/events/', views.event_list, name='event_list'),
     path('dashboard/events/<int:event_id>/', views.event_detail, name='event_detail'),
-
-    
-    
 ]
