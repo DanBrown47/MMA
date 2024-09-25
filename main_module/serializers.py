@@ -19,13 +19,17 @@ class EventSerializer(serializers.ModelSerializer):
 class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'coach_name','club_name', 'photo', 'id_card', 'main_event']
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
 
 class FighterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']  # Specify fields explicitly
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']  # Specify fields explicitly
         read_only_fields = ['email', 'main_event']
+    def validate(self, attrs):
+        if not attrs.get('name') or not attrs.get('middle_name') or not attrs.get('last_name'):
+            raise serializers.ValidationError("All name parts must be provided to generate a unique ID.")
+        return attrs
 
 class RegistrationSerializer(serializers.ModelSerializer):
     fighter = FighterSerializer(read_only=True)
@@ -61,7 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event']
+        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:

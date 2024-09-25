@@ -56,6 +56,7 @@ function fetchProfileData() {
         if (data.profile) {
             document.getElementById('profile_pic').src = data.profile.photo;
             document.getElementById('profile_name').innerText = data.profile.name;
+            document.getElementById('unique_id').innerText = data.profile.unique_id;
             document.getElementById('name_of_fighter').innerText = data.profile.name;
             document.getElementById('age_of_fighter').innerText = data.profile.age;
             document.getElementById('weight_of_fighter').innerText = data.profile.weight;

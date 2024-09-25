@@ -4,9 +4,9 @@ X  Requirments txt
 -  Register -> Google pay page for event -> screenshot upload -> DB Table
 -  Fixture Generation - Rules 
 
--  Add Firstname, Middlename, Lastname DB
--  Add Win, Loss, No Contest DB
+x  Add Firstname, Middlename, Lastname DB
+X  Add Win, Loss, No Contest DB
 X  JWT for login
 -  Admin LTE
--  Unique ID generation for profile
+X  Unique ID generation for profile
 X  Login Page -> home button

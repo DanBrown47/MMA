@@ -76,7 +76,7 @@ class Fighter(AbstractBaseUser):
     win=models.IntegerField(blank=True,null=True)
     loss=models.IntegerField(blank=True,null=True)
     no_contest=models.IntegerField(blank=True,null=True)
-    unique_id=models.CharField(max_length=10,blank=False,null=False)
+    unique_id=models.CharField(max_length=10,blank=False,null=False,editable=False)
     # Required fields for admin interface compatibility
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -101,6 +101,18 @@ class Fighter(AbstractBaseUser):
     
     def __str__(self):
         return self.email
+    def generate_unique_id(self):
+        if not self.name or not self.middle_name or not self.last_name:
+            raise ValueError("All name parts (name, middle_name, last_name) must be provided to generate unique ID.")
+    
+        initials = f"{self.name[0].upper()}{self.middle_name[0].upper()}{self.last_name[0].upper()}"
+        total_fighters = Fighter.objects.count()
+        unique_number = 1001 + total_fighters  # Incremented based on the number of existing fighters
+        return f"{initials}{unique_number}"
+    def save(self, *args, **kwargs):
+        if not self.unique_id:
+            self.unique_id = self.generate_unique_id()
+        super().save(*args, **kwargs)
 
 class Registration(models.Model):
     fighter = models.ForeignKey(Fighter, on_delete=models.CASCADE)
