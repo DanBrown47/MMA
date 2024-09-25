@@ -53,9 +53,9 @@ class FighterManager(BaseUserManager):
     
 class Fighter(AbstractBaseUser):    
     name = models.CharField(max_length=255,unique=False, blank=False, null=True)
-    middle_name = models.CharField(max_length=255,unique=False, blank=False, null=True)
-    last_name = models.CharField(max_length=255,unique=False, blank=False, null=True)
-    age = models.PositiveIntegerField(blank=False, null=False, default=18)
+    middle_name = models.CharField(max_length=255,unique=False, blank=True, null=True)
+    last_name = models.CharField(max_length=255,unique=False, blank=True, null=True)
+    age = models.PositiveIntegerField(blank=False, null=False)
     weight = models.IntegerField(blank=False, null=False, default=0)
     weight_category = models.CharField(max_length=200, unique=False, blank=False, null=True)
     height = models.IntegerField(blank=False, null=False, default=0)
@@ -102,12 +102,18 @@ class Fighter(AbstractBaseUser):
     def __str__(self):
         return self.email
     def generate_unique_id(self):
-        if not self.name or not self.middle_name or not self.last_name:
-            raise ValueError("All name parts (name, middle_name, last_name) must be provided to generate unique ID.")
+        # if not self.name or not self.middle_name or not self.last_name:
+        #     raise ValueError("All name parts (name, middle_name, last_name) must be provided to generate unique ID.")
     
-        initials = f"{self.name[0].upper()}{self.middle_name[0].upper()}{self.last_name[0].upper()}"
+        first_initial = self.name[0].upper() if self.name else '-'
+        middle_initial = self.middle_name[0].upper() if self.middle_name else '-'
+        last_initial = self.last_name[0].upper() if self.last_name else '-'
+
+        initials = f"{first_initial}{middle_initial}{last_initial}"
+    
         total_fighters = Fighter.objects.count()
         unique_number = 1001 + total_fighters  # Incremented based on the number of existing fighters
+    
         return f"{initials}{unique_number}"
     def save(self, *args, **kwargs):
         if not self.unique_id:

@@ -87,6 +87,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             address=validated_data.get('address', None),
             state=validated_data['state'],
             sex=validated_data['sex'],
+            main_event=validated_data['main_event'],
             club_name=validated_data.get('club_name', None),
             coach_name=validated_data.get('coach_name'),
             photo=validated_data.get('photo', None),

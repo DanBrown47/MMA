@@ -63,6 +63,7 @@ function fetchProfileData() {
             document.getElementById('weight_category').innerText = data.profile.weight_category;
             document.getElementById('height_of_fighter').innerText = data.profile.height;
             document.getElementById('club_of_fighter').innerText = data.profile.club_name;
+            document.getElementById('coach_name').innerText = data.profile.coach_name;
             
         }
     })
