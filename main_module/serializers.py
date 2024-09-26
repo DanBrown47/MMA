@@ -19,12 +19,12 @@ class EventSerializer(serializers.ModelSerializer):
 class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category', 'height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'weight_code','player_lock','player_disqualify','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
 
 class FighterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fighter
-        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number','password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']  # Specify fields explicitly
+        fields = ['name','middle_name','last_name', 'age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'weight_code','player_lock','player_disqualify', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']  # Specify fields explicitly
         read_only_fields = ['email', 'main_event']
     def validate(self, attrs):
         if not attrs.get('name') or not attrs.get('middle_name') or not attrs.get('last_name'):
@@ -65,7 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
+        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category', 'weight_code','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -82,6 +82,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             age=validated_data['age'],
             weight=validated_data['weight'],
             weight_category=validated_data['weight_category'],
+            weight_code=validated_data['weight_code'],
             height=validated_data['height'],
             date_of_birth=validated_data.get('date_of_birth', None),
             address=validated_data.get('address', None),

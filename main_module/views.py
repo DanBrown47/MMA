@@ -62,7 +62,7 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = EventSerializer
 
     @action(detail=True, methods=['post'], permission_classes=[])
-    def register(self, request, pk=None):
+    def register(self, request):
         event = self.get_object()
         if event.registrations.count() >= event.max_participants:
             return Response({'error': 'Event is full.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -132,6 +132,24 @@ def dashboard_view(request):
     fighter_instance = Fighter.objects.get(email=email)
     serializer = FighterSerializer(fighter_instance, many=False) 
     return Response({'profile': serializer.data}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def all_user(request): 
+    user = request.user
+    is_staff = user.is_staff
+
+    if is_staff:
+        # If user is admin, return all fighters
+        fighters = Fighter.objects.all()
+        serializer = FighterSerializer(fighters, many=True)
+        return Response({
+            'is_staff': True,
+            'all_fighters': serializer.data
+        }, status=status.HTTP_200_OK)
+    else:
+        # If user is not staff, return only their profile
+        return Response("Not Authenticated", status=status.HTTP_403_FORBIDDEN)
 
 # Logout view
 def logout_view(request):

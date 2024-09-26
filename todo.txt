@@ -2,7 +2,7 @@ Todo stuff
 
 X  Requirments txt
 -  Register -> Google pay page for event -> screenshot upload -> DB Table
--  Fixture Generation - Rules 
+X  Fixture Generation - Rules 
 
 x  Add Firstname, Middlename, Lastname DB
 X  Add Win, Loss, No Contest DB

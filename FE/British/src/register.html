@@ -48,10 +48,6 @@
                     <input type="text" id="last_name" name="last_name"  >
                 </div>
 
-
-
-                
-
                 <div class="form-group">
                     <label for="dob">Date of Birth</label>
                     <input type="date" id="date_of_birth" name="date_of_birth">
@@ -59,30 +55,12 @@
                 </div>
                 <div class="form-group">
                     <label for="age">Age:</label>
-                    <input type="number" id="age" name="age" readonly>
+                    <input type="number" id="age" name="age" min="8.0" max="80" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="weight">Weight (in kg)</label>
-                    <input type="number" id="weight" name="weight" step="0.1"  >
-                </div>
-                <div class="form-group">
-                    <label for="weight_category">Weight Category</label>
-                    <input type="text" id="weight_category" name="weight_category" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="height">Height (in cm)</label>
-                    <input type="number" id="height" name="height"  >
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address"  >
-                </div>
-                <div class="form-group">
-                    <label for="state">State</label>
-                    <input type="text" id="state" name="state" >
+                    <input type="number" id="weight" name="weight" step="0.1" min="0" max="100">
                 </div>
 
                 <div class="form-group">
@@ -95,6 +73,57 @@
                     </select>
                     
                 </div>
+                
+                <div class="form-group">
+                    <label for="ageGroup">Age Group</label>
+                    <select id="ageGroup" name="ageGroup">
+                        <option value="U10">U10 (8 and 9 years old)</option>
+                        <option value="U12">U12 (10 and 11 years old)</option>
+                        <option value="U14">U14 (12 and 13 years old)</option>
+                        <option value="U16">U16 (14 and 15 years old)</option>
+                        <option value="U18">U18 (16 and 17 years old)</option>
+                        <option value="Seniors">Seniors (18 years and above)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight_category">Weight Category</label>
+                    <input type="text" id="weight_category" name="weight_category" readonly>
+                </div>
+
+                <div class="form-group"></div>
+                    <label for="event-type">Main Event Type</label>
+                    <select id="main_event" name="main_event">
+                        <option value="">Select</option>
+                        <option value="MMA">MMA</option>
+                        <option value="Strike">Striking MMA</option>
+                        <!-- <option value="3">Boxing</option>
+                        <option value="4">Kickboxing</option>
+                        <option value="5">Muay Thai</option>
+                        <option value="6">Grappling</option> -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight_code"> Competition Code</label>
+                    <input type="text" id="weight_code" name="weight_code" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="height">Height (in cm)</label>
+                    <input type="number" id="height" name="height" min="70" max="250">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state">
+                </div>
+
+                
 
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -115,18 +144,7 @@
                     <input type="password" id="password2" name="password2"  >
                 </div>
 
-                <div class="form-group">
-                    <label for="event-type">Main Event Type</label>
-                    <select id="main_event" name="main_event">
-                        <option value="">Select</option>
-                        <option value="1">MMA</option>
-                        <option value="2">Striking MMA</option>
-                        <option value="3">Boxing</option>
-                        <option value="4">Kickboxing</option>
-                        <option value="5">Muay Thai</option>
-                        <option value="6">Grappling</option>
-                    </select>
-                </div>
+                
                 <div class="form-group">
                     <label for="coach-name">Coach name</label>
                     <input type="text" id="coach_name" name="coach_name">
@@ -161,7 +179,57 @@
             <a href="https://youtube.com"><img src="../img/youtube.png" alt="YouTube"></a>
         </div>
     </footer>
+    <script>
+        // Include the getCategoryCode function here
+        function getCategoryCode(weight, gender, ageGroup, main_event) {
+        const categories = {
+            m: {
+            U10: [27.2,31.7, 36.3, 36.4],
+            U12: [31.7, 36.3, 40.8, 45.4, 45.5],
+            U14: [36.3, 40.8, 45.4, 49.9, 54.4, 58.7, 63.5, 63.6],
+            U16: [49.9, 54.4, 58.7, 63.5, 70.3, 77.1, 77.2],
+            U18: [52.2, 57.7, 63.5, 70.3, 77.1, 83.9, 93.0, 93.1],
+            Seniors: [52.2, 56.7, 61.2, 65.8, 70.3, 77.1, 83.9, 93.0, 120.0, 120.1]
+            },
+            f: {
+            U10: [27.2, 31.7, 36.3, 36.4],
+            U12: [31.7, 36.3, 40.8, 45.4, 45.5],
+            U14: [36.3, 40.8, 45.4, 49.9, 54.4, 54.5],
+            U16: [40.8, 45.4, 49.9, 54.4, 58.7, 63.5, 63.6],
+            U18: [45.4, 49.9, 54.4, 58.7, 63.5, 63.6],
+            Seniors: [47.6, 52.2, 56.7, 61.2, 65.8, 72.6, 72.7]
+            }
+        };
 
+        const categoryWeights = categories[gender.toLowerCase()][ageGroup];
+        let categoryIndex = categoryWeights.findIndex(limit => weight <= parseFloat(limit));
+        if (categoryIndex === -1) categoryIndex = categoryWeights.length - 1;
+
+        const prefix = gender === 'male' ? 'M' : 'F';
+        console.log(categoryWeights[categoryIndex])
+        const weightValue = categoryWeights[categoryIndex]
+
+        return `${prefix}_${ageGroup}_${weightValue}_${main_event}`;
+        }
+        
+        document.getElementById('weight').addEventListener('input', updateCategory);
+        document.getElementById('sex').addEventListener('change', updateCategory);
+        document.getElementById('ageGroup').addEventListener('change', updateCategory);
+        document.getElementById('main_event').addEventListener('change', updateCategory);
+        
+        function updateCategory() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const gender = document.getElementById('sex').value;
+            const ageGroup = document.getElementById('ageGroup').value;
+            const main_event = document.getElementById('main_event').value;
+            if (!isNaN(weight) && gender && ageGroup && main_event) {
+                const category = getCategoryCode(weight, gender, ageGroup, main_event);
+                document.getElementById('weight_code').value = category;
+            } else {
+                document.getElementById('weight_code').value = '';
+            }
+        }
+        </script>
     <script src="../js/register.js"></script>
 </body>
 </html>
