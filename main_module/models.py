@@ -8,6 +8,8 @@ class EventType(models.Model):
         ('GR grappling', 'Grappling'),
         ('NF normal_fighting', 'Normal Fighting'),
         ('BX boxing', 'Boxing'),
+        ('MMA','MMA Match'),
+        ('MMA','MMA Strike')
     )
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
 
@@ -79,7 +81,7 @@ class Fighter(AbstractBaseUser):
     player_lock=models.BooleanField(default=False)
     player_disqualify=models.BooleanField(default=False)
     unique_id=models.CharField(max_length=10,blank=False,null=True,editable=False)
-    is_active = models.BooleanField(default=True)
+    is_fighter_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 

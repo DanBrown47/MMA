@@ -17,7 +17,7 @@ class FighterAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('name', 'age', 'weight', 'height', 'date_of_birth', 'address', 'sex', 'club_name', 'photo', 'id_card')}),
+        ('Personal info', {'fields': ('name', 'age', 'weight', 'height', 'date_of_birth', 'address', 'sex', 'club_name', 'photo', 'id_card','is_fighter_active')}),
     )
 
 admin.site.register(EventType)
