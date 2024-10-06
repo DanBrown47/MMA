@@ -65,7 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fighter
-        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category', 'weight_code','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id','is_fighter_active']
+        fields = ['name', 'middle_name','last_name','age', 'weight', 'weight_category', 'weight_code','height', 'date_of_birth', 'address', 'state','sex', 'email','number', 'password' ,'password2','coach_name','club_name', 'photo', 'id_card', 'main_event','unique_id']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -93,8 +93,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             coach_name=validated_data.get('coach_name'),
             photo=validated_data.get('photo', None),
             id_card=validated_data.get('id_card', None),
-            is_fighter_active=validated_data('is_fighter_active')
-        ),
+            # is_fighter_active=validated_data('is_fighter_active')
+        )
 
         user.set_password(validated_data['password'])
         user.save()

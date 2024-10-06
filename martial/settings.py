@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-i)5wj14g(7lqi1!stjf)0!gdv1&c(ae7595d$qp-*j-&i-d)x1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*','127.0.0.1','primalsportsmanagement.com','13.234.213.105']
 
 
 # Application definition
@@ -207,4 +207,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+
+STATIC_URL = '/static/'
+
+# Path where static files will be collected (only needed for production)
+STATIC_ROOT = BASE_DIR / 'static'
 
