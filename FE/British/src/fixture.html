@@ -62,6 +62,12 @@
             font-weight: bold;
         }
 
+        h2 {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
         @media (max-width: 768px) {
             .fight-card {
                 flex-direction: column;
@@ -100,8 +106,8 @@
             .then(response => response.json())
             .then(datas => {
                 const fighters = datas.all_fighters;
-                const matchedFights = [];
-
+                const matchedFights = {};
+                
                 // Group fighters by weight code
                 const groupedFighters = {};
                 fighters.forEach(fighter => {
@@ -119,7 +125,10 @@
                     // If fighters are in pairs, create matchups
                     if (fighterList.length >= 2) {
                         for (let i = 0; i < fighterList.length - 1; i += 2) {
-                            matchedFights.push({
+                            if (!matchedFights[weightCode]) {
+                                matchedFights[weightCode] = [];
+                            }
+                            matchedFights[weightCode].push({
                                 red: fighterList[i],
                                 blue: fighterList[i + 1]
                             });
@@ -128,56 +137,72 @@
 
                     // If there is an unmatched fighter, push them alone with a grey opponent
                     if (fighterList.length % 2 !== 0) {
-                        matchedFights.push({
+                        if (!matchedFights[weightCode]) {
+                            matchedFights[weightCode] = [];
+                        }
+                        matchedFights[weightCode].push({
                             red: fighterList[fighterList.length - 1],
                             blue: null  // No opponent
                         });
                     }
                 }
 
-                // Display matched fights
+                // Display matched fights under their respective headings
                 const fixtureContainer = document.getElementById('fixture-container');
-                matchedFights.forEach(fight => {
-                    const fightCard = document.createElement('div');
-                    fightCard.className = 'fight-card';
+                for (const weightCode in matchedFights) {
+                    // Extract the category name (e.g., "U10" from "F_U10_36.4_MMA")
+                    const category = weightCode.split('_')[1];
 
-                    // Red corner
-                    const redFighter = document.createElement('div');
-                    redFighter.className = 'fighter red';
-                    redFighter.innerHTML = `
-            <h3>${fight.red.name} ${fight.red.last_name}</h3>
-            <p>Weight: ${fight.red.weight}kg</p>
-            <p>Height: ${fight.red.height}cm</p>
-            <p>${fight.red.weight_category}</p>
-        `;
-                    fightCard.appendChild(redFighter);
+                    // Create a heading for the category
+                    const categoryHeading = document.createElement('h2');
+                    categoryHeading.innerText = category;
+                    fixtureContainer.appendChild(categoryHeading);
 
-                    // VS
-                    const vs = document.createElement('div');
-                    vs.className = 'vs';
-                    vs.innerText = 'VS';
-                    fightCard.appendChild(vs);
+                    matchedFights[weightCode].forEach(fight => {
+                        const fightCard = document.createElement('div');
+                        fightCard.className = 'fight-card';
 
-                    // Blue corner
-                    const blueFighter = document.createElement('div');
-                    if (fight.blue) {
-                        blueFighter.className = 'fighter blue';
-                        blueFighter.innerHTML = `
-                <h3>${fight.blue.name} ${fight.blue.last_name}</h3>
-                <p>Weight: ${fight.blue.weight}kg</p>
-                <p>Height: ${fight.blue.height}cm</p>
-                <p>${fight.blue.weight_category}</p>
-            `;
-                    } else {
-                        blueFighter.className = 'fighter grey';
-                        blueFighter.innerHTML = `
-                <h3>No Opponent</h3>
-            `;
-                    }
-                    fightCard.appendChild(blueFighter);
+                        // Red corner
+                        const redFighter = document.createElement('div');
+                        redFighter.className = 'fighter red';
+                        redFighter.innerHTML = `
+                            <h3>${fight.red.name} ${fight.red.middle_name} ${fight.red.last_name}</h3>
+                            <h4>${fight.red.weight_code}</h4>
+                            
+                            <p>Weight: ${fight.red.weight}kg</p>
+                            <p>${fight.red.weight_category}</p>
+                            <p>Club Name: ${fight.red.club_name}</p>
+                        `;
+                        fightCard.appendChild(redFighter);
 
-                    fixtureContainer.appendChild(fightCard);
-                });
+                        // VS
+                        const vs = document.createElement('div');
+                        vs.className = 'vs';
+                        vs.innerText = 'VS';
+                        fightCard.appendChild(vs);
+
+                        // Blue corner
+                        const blueFighter = document.createElement('div');
+                        if (fight.blue) {
+                            blueFighter.className = 'fighter blue';
+                            blueFighter.innerHTML = `
+                                <h3>${fight.blue.name} ${fight.blue.last_name}</h3>
+                                <h4>${fight.blue.weight_code}</h4>
+                                <p>Weight: ${fight.blue.weight}kg</p>
+                                <p>${fight.blue.weight_category}</p>
+                                <p>Club Name: ${fight.blue.club_name}</p>
+                            `;
+                        } else {
+                            blueFighter.className = 'fighter grey';
+                            blueFighter.innerHTML = `
+                                <h3>No Opponent</h3>
+                            `;
+                        }
+                        fightCard.appendChild(blueFighter);
+
+                        fixtureContainer.appendChild(fightCard);
+                    });
+                }
             });
     </script>
 </body>

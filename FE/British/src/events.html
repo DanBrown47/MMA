@@ -86,14 +86,10 @@
           text-align: center;
         }
 
-        .modal-content img {
-          width: 150px;
-          height: 150px;
+        .modal-content input[type="text"] {
+          width: 80%;
+          padding: 10px;
           margin-bottom: 20px;
-        }
-
-        .modal-content input[type="file"] {
-          margin-bottom: 10px;
         }
 
         .modal-close {
@@ -150,10 +146,9 @@
     <div id="eventModal" class="modal">
       <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2>Event QR Code</h2>
-        <img id="qrCode" src="../img/qr_placeholder.png" alt="QR Code">
-        <form id="uploadForm">
-          <input type="file" id="fileUpload">
+        <h2>Enter Fighter's Unique Code</h2>
+        <form id="codeForm">
+          <input type="text" id="fighterCode" placeholder="Enter unique fighter code" required>
           <br>
           <button type="submit" class="modal-submit">Submit</button>
         </form>
@@ -226,14 +221,13 @@
         }
       });
 
-      // Handle form submission (file upload)
-      document.getElementById("uploadForm").addEventListener("submit", (event) => {
+      // Handle form submission for fighter's unique code
+      document.getElementById("codeForm").addEventListener("submit", (event) => {
         event.preventDefault();
-        const fileInput = document.getElementById("fileUpload");
-        const file = fileInput.files[0];
-        if (file) {
-          console.log("File uploaded:", file.name);
-          // Handle file upload to server here
+        const fighterCode = document.getElementById("fighterCode").value;
+        if (fighterCode) {
+          console.log("Fighter code submitted:", fighterCode);
+          // Handle the fighter's code submission logic here (e.g., sending it to the server)
         }
       });
     </script>

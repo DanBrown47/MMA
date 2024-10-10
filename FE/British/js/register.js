@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const ageInput = document.getElementById('age');  
     const weightInput = document.getElementById('weight'); 
     const weightCategoryInput = document.getElementById('weight_category');  
+    const ageGroupInput = document.getElementById('ageGroup'); // For age group selection
     const form = document.querySelector("form");  
 
     // Weight categories in kg
@@ -33,18 +34,50 @@ document.addEventListener("DOMContentLoaded", function() {
         return "Unknown";
     }
 
-    // Event listener to calculate age when DOB is changed
+    // Function to calculate age from DOB
+    function calculateAge(dobValue) {
+        const dob = new Date(dobValue);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    // Function to determine age group based on age
+    function getAgeGroup(age) {
+        if (age >= 8 && age <= 9) {
+            return 'U10';
+        } else if (age >= 10 && age <= 11) {
+            return 'U12';
+        } else if (age >= 12 && age <= 13) {
+            return 'U14';
+        } else if (age >= 14 && age <= 15) {
+            return 'U16';
+        } else if (age >= 16 && age <= 17) {
+            return 'U18';
+        } else if (age >= 18) {
+            return 'Seniors';
+        } else {
+            return '';
+        }
+    }
+
+    // Event listener to calculate age and age group when DOB is changed
     dobInput.addEventListener('change', function() {
         const dobValue = this.value;
         if (dobValue) {
-            const dob = new Date(dobValue);
-            const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const monthDiff = today.getMonth() - dob.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                age--;
-            }
+            const age = calculateAge(dobValue);
             ageInput.value = age;
+
+            const ageGroup = getAgeGroup(age);
+            if (ageGroup) {
+                ageGroupInput.value = ageGroup;
+            } else {
+                ageGroupInput.value = '';
+            }
         }
     });
 
@@ -76,9 +109,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const formData = new FormData(form);
-        console.log("Sending form")
-        console.log(formData)
-        console.log("=======")
+        console.log("Sending form");
+        console.log(formData);
+        console.log("=======");
+
         fetch("http://127.0.0.1:8000/api/register/", {
             method: "POST",
             body: formData,
