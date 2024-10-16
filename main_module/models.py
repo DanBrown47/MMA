@@ -30,6 +30,18 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.event_type} - {self.date}"
+class RegistrationEvent(models.Model):
+    eventid = models.IntegerField()  # Store the event's ID
+    event_name = models.CharField(max_length=255)  # Store the event's name
+    fighterid = models.CharField(max_length=255)  # Store the fighter's ID
+    fighter_name = models.CharField(max_length=255)  # Store the fighter's name
+
+    class Meta:
+        verbose_name = 'Registration Event'
+        verbose_name_plural = 'Registration Events'
+
+    def __str__(self):
+        return f"{self.fighter_name} registered for {self.event_name}"
 class FighterManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:

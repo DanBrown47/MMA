@@ -2,6 +2,7 @@
 document.getElementById('show_profile').addEventListener('click', function() {
     document.getElementById('profile_section').classList.add('active');
     document.getElementById('event_section').classList.remove('active');
+    
 });
 
 document.getElementById('show_events').addEventListener('click', function() {
